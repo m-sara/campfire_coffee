@@ -9,12 +9,14 @@ var Pike = {
   randomCust: [],
   cupsPerHour: [],
 
-  for (var i = 0; i < this.hours.length; i++) {
-    randomCustf: function() {
+  randomCustf: function() {
+    for (var i = 0; i < this.hours.length; i++) {
       var randomCustv = Math.floor((Math.random() * (this.maxCust - this.minCust)) + this.minCust);
       console.log(randomCustv);
       this.randomCust.push(randomCustv);
-    },
+    }
+  }
+  // ,
   // cupsPerHourf: function() {
   //   var cupsPerHourv = this.randomCust[i] * this.averageCups;
   //   console.log(cupsPerHourv);
@@ -28,9 +30,10 @@ var Pike = {
   // // employeeNumber: function() {
   // //   var employeeNumber = Math.round()
   // // }
-  }
+  // }
 }
 
 
 Pike.randomCustf();
-Pike.cupsPerHourf();
+// Pike.cupsPerHourf();
+console.log(Pike.randomCust);
