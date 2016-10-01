@@ -1,4 +1,19 @@
 * {
   background-color: black;
-  color: white;
+  color: grey;
+}
+
+/*body {
+  font-family: 'Arvo', serif;
+}*/
+
+h1 {
+  color: white; /* For browsers that do not support gradients */
+  font-size: 38px;
+  font-variant: small-caps;
+  -webkit-transform: scale(1,2);
+  letter-spacing: 1.5px;
+  background: -webkit-linear-gradient(yellow, red);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
