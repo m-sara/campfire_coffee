@@ -1,26 +1,35 @@
 'use strict';
 
+// Title
+var Title = {
+  docTitleEl: document.getElementById('docTitle'),
+  typeTitle: function() {
+    var docTitle = document.createElement('h1');
+    docTitle.textContent = 'Campfire Coffee Daily Projections';
+    this.docTitleEl.appendChild(docTitle);
+  }
+}
+
 // Pike Place Market
 var Pike = {
   minCust: 14,
   maxCust: 35,
   averageCups: 1.2,
   averageLbs: 0.34,
-  hours: ['6:00am', '7:00am', '8:00am', '9:00am', '10:00am', '11:00am', '12:00pm', '1:00pm', '2:00pm', '3:00pm', '4:00pm', '5:00pm', '6:00pm', '7:00pm', '8:00pm', '9:00pm'],
+  hours: ['6:00am', '7:00am', '8:00am', '9:00am', '10:00am', '11:00am', '12:00pm', '1:00pm', '2:00pm', '3:00pm', '4:00pm', '5:00pm', '6:00pm', '7:00pm', '8:00pm'],
   randomCust: [],
   totalCust: 0,
   cupsPerHour: [],
   totalCups: 0,
   bagLbsPerHour: [],
-  totalLbs: 0,
+  totalBagLbs: 0,
   cupBeansPerHour: [],
-  totalBeansHr: [],
+  totalCupBeans: [],
   allBeans: 0,
   emplPerHour: [],
   pikeEl: document.getElementById('pike'),
   ulEl: document.createElement('ul'),
-  pikeTitle: document.createElement('pikeTitle'),
-
+  titleEl: document.createElement('titleEl'),
 
   getRandomCust: function() {
     this.randomCust.length = 0;
@@ -49,8 +58,8 @@ var Pike = {
     for (var i = 0; i < this.hours.length; i++) {
       var numLbsHr = Math.ceil(this.randomCust[i] * this.averageLbs);
       console.log('Lbs for hour ' + (i + 1) + ': ' + numLbsHr);
-      this.totalLbs += numLbsHr;
-      console.log('Total lbs for the day: ' + this.totalLbs);
+      this.totalBagLbs += numLbsHr;
+      console.log('Total lbs for the day: ' + this.totalBagLbs);
       this.bagLbsPerHour.push(numLbsHr);
     }
   },
@@ -70,7 +79,7 @@ var Pike = {
       console.log(this.bagLbsPerHour[i]);
       var totalBeenz = this.cupBeansPerHour[i] + this.bagLbsPerHour[i];
       console.log('Total lbs of beans for hour ' + (i + 1) + ': ' + totalBeenz);
-      this.totalBeansHr.push(totalBeenz);
+      this.totalCupBeans.push(totalBeenz);
       this.allBeans += totalBeenz;
     }
   },
@@ -99,17 +108,29 @@ var Pike = {
     console.log(Pike.emplPerHour);
   },
 
-  typeStuff: function() {
+  typeAllTheStuff: function() {
     for (var i = 0; i < this.hours.length; i++) {
+      var title = document.createElement('h3');
+      title.textContent = 'Pike Place Market';
       var liEl = document.createElement('li');
-      liEl.textContent = this.hours[i] + ': ' + this.totalBeansHr[i] + ' lbs [' + this.randomCust[i] + ' customers, ' + this.cupsPerHour[i] + ' cups (' + this.cupBeansPerHour[i] + ' lbs), ' + this.bagLbsPerHour[i] + ' lbs to-go]';
+      liEl.textContent = this.hours[i] + ': ' + this.totalCupBeans[i] + ' lbs [' + this.randomCust[i] + ' customers, ' + this.cupsPerHour[i] + ' cups (' + this.cupBeansPerHour[i] + ' lbs), ' + this.bagLbsPerHour[i] + ' lbs to-go]';
       this.ulEl.appendChild(liEl);
-      var pikeT = document.createElement('h3');
-      pikeT.textContent = 'Pike Place Market';
+      var allCust = document.createElement('li');
+      allCust.textContent = 'Total customers at ' + title.textContent + ': ' + this.totalCust;
+      var allCups = document.createElement('li');
+      allCups.textContent = 'Total cups sold at ' + title.textContent + ': ' + this.totalCups;
+      var allBagLbs = document.createElement('li');
+      allBagLbs.textContent = 'Total to-go pound packages sold at ' + title.textContent + ': ' + this.totalBagLbs;
+      var allLbs = document.createElement('li');
+      allLbs.textContent = 'Total pounds of beans needed at ' + title.textContent + ': ' + parseFloat(this.allBeans).toFixed(1);
     }
-    this.pikeTitle.appendChild(pikeT);
-    this.pikeEl.appendChild(this.pikeTitle);
+    this.titleEl.appendChild(title);
+    this.pikeEl.appendChild(this.titleEl);
     this.pikeEl.appendChild(this.ulEl);
+    this.pikeEl.appendChild(allCust);
+    this.pikeEl.appendChild(allCups);
+    this.pikeEl.appendChild(allBagLbs);
+    this.pikeEl.appendChild(allLbs);
   }
 }
 
@@ -119,20 +140,20 @@ var capHill = {
   maxCust: 28,
   averageCups: 3.2,
   averageLbs: 0.03,
-  hours: ['6:00am', '7:00am', '8:00am', '9:00am', '10:00am', '11:00am', '12:00pm', '1:00pm', '2:00pm', '3:00pm', '4:00pm', '5:00pm', '6:00pm', '7:00pm', '8:00pm', '9:00pm'],
+  hours: ['6:00am', '7:00am', '8:00am', '9:00am', '10:00am', '11:00am', '12:00pm', '1:00pm', '2:00pm', '3:00pm', '4:00pm', '5:00pm', '6:00pm', '7:00pm', '8:00pm'],
   randomCust: [],
   totalCust: 0,
   cupsPerHour: [],
   totalCups: 0,
   bagLbsPerHour: [],
-  totalLbs: 0,
+  totalBagLbs: 0,
   cupBeansPerHour: [],
-  totalBeansHr: [],
+  totalCupBeans: [],
   allBeans: 0,
   emplPerHour: [],
   capHillEl: document.getElementById('capHill'),
   ulEl: document.createElement('ul'),
-  capHillTitle: document.createElement('capHillTitle'),
+  titleEl: document.createElement('titleEl'),
 
 
   getRandomCust: function() {
@@ -162,8 +183,8 @@ var capHill = {
     for (var i = 0; i < this.hours.length; i++) {
       var numLbsHr = Math.ceil(this.randomCust[i] * this.averageLbs);
       console.log('Lbs for hour ' + (i + 1) + ': ' + numLbsHr);
-      this.totalLbs += numLbsHr;
-      console.log('Total lbs for the day: ' + this.totalLbs);
+      this.totalBagLbs += numLbsHr;
+      console.log('Total lbs for the day: ' + this.totalBagLbs);
       this.bagLbsPerHour.push(numLbsHr);
     }
   },
@@ -183,7 +204,7 @@ var capHill = {
       console.log(this.bagLbsPerHour[i]);
       var totalBeenz = this.cupBeansPerHour[i] + this.bagLbsPerHour[i];
       console.log('Total lbs of beans for hour ' + (i + 1) + ': ' + totalBeenz);
-      this.totalBeansHr.push(totalBeenz);
+      this.totalCupBeans.push(totalBeenz);
       this.allBeans += totalBeenz;
     }
   },
@@ -212,17 +233,29 @@ var capHill = {
     console.log(capHill.emplPerHour);
   },
 
-  typeStuff: function() {
+  typeAllTheStuff: function() {
     for (var i = 0; i < this.hours.length; i++) {
       var liEl = document.createElement('li');
-      liEl.textContent = this.hours[i] + ': ' + this.totalBeansHr[i] + ' lbs [' + this.randomCust[i] + ' customers, ' + this.cupsPerHour[i] + ' cups (' + this.cupBeansPerHour[i] + ' lbs), ' + this.bagLbsPerHour[i] + ' lbs to-go]';
+      liEl.textContent = this.hours[i] + ': ' + this.totalCupBeans[i] + ' lbs [' + this.randomCust[i] + ' customers, ' + this.cupsPerHour[i] + ' cups (' + this.cupBeansPerHour[i] + ' lbs), ' + this.bagLbsPerHour[i] + ' lbs to-go]';
       this.ulEl.appendChild(liEl);
-      var capHillT = document.createElement('h3');
-      capHillT.textContent = 'Capitol Hill';
+      var title = document.createElement('h3');
+      title.textContent = 'Capitol Hill';
+      var allCust = document.createElement('li');
+      allCust.textContent = 'Total customers at ' + title.textContent + ': ' + this.totalCust;
+      var allCups = document.createElement('li');
+      allCups.textContent = 'Total cups sold at ' + title.textContent + ': ' + this.totalCups;
+      var allBagLbs = document.createElement('li');
+      allBagLbs.textContent = 'Total to-go pound packages sold at ' + title.textContent + ': ' + this.totalBagLbs;
+      var allLbs = document.createElement('li');
+      allLbs.textContent = 'Total pounds of beans needed at ' + title.textContent + ': ' + parseFloat(this.allBeans).toFixed(1);
     }
-    this.capHillTitle.appendChild(capHillT);
-    this.capHillEl.appendChild(this.capHillTitle);
+    this.titleEl.appendChild(title);
+    this.capHillEl.appendChild(this.titleEl);
     this.capHillEl.appendChild(this.ulEl);
+    this.capHillEl.appendChild(allCust);
+    this.capHillEl.appendChild(allCups);
+    this.capHillEl.appendChild(allBagLbs);
+    this.capHillEl.appendChild(allLbs);
   }
 }
 
@@ -232,20 +265,20 @@ var seaLib = {
   maxCust: 45,
   averageCups: 2.6,
   averageLbs: 0.02,
-  hours: ['6:00am', '7:00am', '8:00am', '9:00am', '10:00am', '11:00am', '12:00pm', '1:00pm', '2:00pm', '3:00pm', '4:00pm', '5:00pm', '6:00pm', '7:00pm', '8:00pm', '9:00pm'],
+  hours: ['6:00am', '7:00am', '8:00am', '9:00am', '10:00am', '11:00am', '12:00pm', '1:00pm', '2:00pm', '3:00pm', '4:00pm', '5:00pm', '6:00pm', '7:00pm', '8:00pm'],
   randomCust: [],
   totalCust: 0,
   cupsPerHour: [],
   totalCups: 0,
   bagLbsPerHour: [],
-  totalLbs: 0,
+  totalBagLbs: 0,
   cupBeansPerHour: [],
-  totalBeansHr: [],
+  totalCupBeans: [],
   allBeans: 0,
   emplPerHour: [],
   seaLibEl: document.getElementById('seaLib'),
   ulEl: document.createElement('ul'),
-  seaLibTitle: document.createElement('seaLibTitle'),
+  titleEl: document.createElement('titleEl'),
 
 
   getRandomCust: function() {
@@ -275,8 +308,8 @@ var seaLib = {
     for (var i = 0; i < this.hours.length; i++) {
       var numLbsHr = Math.ceil(this.randomCust[i] * this.averageLbs);
       console.log('Lbs for hour ' + (i + 1) + ': ' + numLbsHr);
-      this.totalLbs += numLbsHr;
-      console.log('Total lbs for the day: ' + this.totalLbs);
+      this.totalBagLbs += numLbsHr;
+      console.log('Total lbs for the day: ' + this.totalBagLbs);
       this.bagLbsPerHour.push(numLbsHr);
     }
   },
@@ -296,7 +329,7 @@ var seaLib = {
       console.log(this.bagLbsPerHour[i]);
       var totalBeenz = this.cupBeansPerHour[i] + this.bagLbsPerHour[i];
       console.log('Total lbs of beans for hour ' + (i + 1) + ': ' + totalBeenz);
-      this.totalBeansHr.push(totalBeenz);
+      this.totalCupBeans.push(totalBeenz);
       this.allBeans += totalBeenz;
     }
   },
@@ -325,17 +358,29 @@ var seaLib = {
     console.log(seaLib.emplPerHour);
   },
 
-  typeStuff: function() {
+  typeAllTheStuff: function() {
     for (var i = 0; i < this.hours.length; i++) {
       var liEl = document.createElement('li');
-      liEl.textContent = this.hours[i] + ': ' + this.totalBeansHr[i] + ' lbs [' + this.randomCust[i] + ' customers, ' + this.cupsPerHour[i] + ' cups (' + this.cupBeansPerHour[i] + ' lbs), ' + this.bagLbsPerHour[i] + ' lbs to-go]';
+      liEl.textContent = this.hours[i] + ': ' + this.totalCupBeans[i] + ' lbs [' + this.randomCust[i] + ' customers, ' + this.cupsPerHour[i] + ' cups (' + this.cupBeansPerHour[i] + ' lbs), ' + this.bagLbsPerHour[i] + ' lbs to-go]';
       this.ulEl.appendChild(liEl);
-      var seaLibT = document.createElement('h3');
-      seaLibT.textContent = 'Seattle Public Library';
+      var title = document.createElement('h3');
+      title.textContent = 'Seattle Public Library';
+      var allCust = document.createElement('li');
+      allCust.textContent = 'Total customers at ' + title.textContent + ': ' + this.totalCust;
+      var allCups = document.createElement('li');
+      allCups.textContent = 'Total cups sold at ' + title.textContent + ': ' + this.totalCups;
+      var allBagLbs = document.createElement('li');
+      allBagLbs.textContent = 'Total to-go pound packages sold at ' + title.textContent + ': ' + this.totalBagLbs;
+      var allLbs = document.createElement('li');
+      allLbs.textContent = 'Total pounds of beans needed at ' + title.textContent + ': ' + parseFloat(this.allBeans).toFixed(1);
     }
-    this.seaLibTitle.appendChild(seaLibT);
-    this.seaLibEl.appendChild(this.seaLibTitle);
+    this.titleEl.appendChild(title);
+    this.seaLibEl.appendChild(this.titleEl);
     this.seaLibEl.appendChild(this.ulEl);
+    this.seaLibEl.appendChild(allCust);
+    this.seaLibEl.appendChild(allCups);
+    this.seaLibEl.appendChild(allBagLbs);
+    this.seaLibEl.appendChild(allLbs);
   }
 }
 
@@ -345,21 +390,20 @@ var Slu = {
   maxCust: 18,
   averageCups: 1.3,
   averageLbs: 0.04,
-  hours: ['6:00am', '7:00am', '8:00am', '9:00am', '10:00am', '11:00am', '12:00pm', '1:00pm', '2:00pm', '3:00pm', '4:00pm', '5:00pm', '6:00pm', '7:00pm', '8:00pm', '9:00pm'],
+  hours: ['6:00am', '7:00am', '8:00am', '9:00am', '10:00am', '11:00am', '12:00pm', '1:00pm', '2:00pm', '3:00pm', '4:00pm', '5:00pm', '6:00pm', '7:00pm', '8:00pm'],
   randomCust: [],
   totalCust: 0,
   cupsPerHour: [],
   totalCups: 0,
   bagLbsPerHour: [],
-  totalLbs: 0,
+  totalBagLbs: 0,
   cupBeansPerHour: [],
-  totalBeansHr: [],
+  totalCupBeans: [],
   allBeans: 0,
   emplPerHour: [],
   sluEl: document.getElementById('Slu'),
   ulEl: document.createElement('ul'),
-  sluTitle: document.createElement('sluTitle'),
-
+  titleEl: document.createElement('titleEl'),
 
   getRandomCust: function() {
     this.randomCust.length = 0;
@@ -388,8 +432,8 @@ var Slu = {
     for (var i = 0; i < this.hours.length; i++) {
       var numLbsHr = Math.ceil(this.randomCust[i] * this.averageLbs);
       console.log('Lbs for hour ' + (i + 1) + ': ' + numLbsHr);
-      this.totalLbs += numLbsHr;
-      console.log('Total lbs for the day: ' + this.totalLbs);
+      this.totalBagLbs += numLbsHr;
+      console.log('Total lbs for the day: ' + this.totalBagLbs);
       this.bagLbsPerHour.push(numLbsHr);
     }
   },
@@ -409,7 +453,7 @@ var Slu = {
       console.log(this.bagLbsPerHour[i]);
       var totalBeenz = this.cupBeansPerHour[i] + this.bagLbsPerHour[i];
       console.log('Total lbs of beans for hour ' + (i + 1) + ': ' + totalBeenz);
-      this.totalBeansHr.push(totalBeenz);
+      this.totalCupBeans.push(totalBeenz);
       this.allBeans += totalBeenz;
     }
   },
@@ -438,17 +482,29 @@ var Slu = {
     console.log(Slu.emplPerHour);
   },
 
-  typeStuff: function() {
+  typeAllTheStuff: function() {
     for (var i = 0; i < this.hours.length; i++) {
       var liEl = document.createElement('li');
-      liEl.textContent = this.hours[i] + ': ' + this.totalBeansHr[i] + ' lbs [' + this.randomCust[i] + ' customers, ' + this.cupsPerHour[i] + ' cups (' + this.cupBeansPerHour[i] + ' lbs), ' + this.bagLbsPerHour[i] + ' lbs to-go]';
+      liEl.textContent = this.hours[i] + ': ' + this.totalCupBeans[i] + ' lbs [' + this.randomCust[i] + ' customers, ' + this.cupsPerHour[i] + ' cups (' + this.cupBeansPerHour[i] + ' lbs), ' + this.bagLbsPerHour[i] + ' lbs to-go]';
       this.ulEl.appendChild(liEl);
-      var sluT = document.createElement('h3');
-      sluT.textContent = 'South Lake Union';
+      var title = document.createElement('h3');
+      title.textContent = 'South Lake Union';
+      var allCust = document.createElement('li');
+      allCust.textContent = 'Total customers at ' + title.textContent + ': ' + this.totalCust;
+      var allCups = document.createElement('li');
+      allCups.textContent = 'Total cups sold at ' + title.textContent + ': ' + this.totalCups;
+      var allBagLbs = document.createElement('li');
+      allBagLbs.textContent = 'Total to-go pound packages sold at ' + title.textContent + ': ' + this.totalBagLbs;
+      var allLbs = document.createElement('li');
+      allLbs.textContent = 'Total pounds of beans needed at ' + title.textContent + ': ' + parseFloat(this.allBeans).toFixed(1);
     }
-    this.sluTitle.appendChild(sluT);
-    this.sluEl.appendChild(this.sluTitle);
+    this.titleEl.appendChild(title);
+    this.sluEl.appendChild(this.titleEl);
     this.sluEl.appendChild(this.ulEl);
+    this.sluEl.appendChild(allCust);
+    this.sluEl.appendChild(allCups);
+    this.sluEl.appendChild(allBagLbs);
+    this.sluEl.appendChild(allLbs);
   }
 }
 
@@ -458,20 +514,20 @@ var seaTac = {
   maxCust: 44,
   averageCups: 1.1,
   averageLbs: 0.41,
-  hours: ['6:00am', '7:00am', '8:00am', '9:00am', '10:00am', '11:00am', '12:00pm', '1:00pm', '2:00pm', '3:00pm', '4:00pm', '5:00pm', '6:00pm', '7:00pm', '8:00pm', '9:00pm'],
+  hours: ['6:00am', '7:00am', '8:00am', '9:00am', '10:00am', '11:00am', '12:00pm', '1:00pm', '2:00pm', '3:00pm', '4:00pm', '5:00pm', '6:00pm', '7:00pm', '8:00pm'],
   randomCust: [],
   totalCust: 0,
   cupsPerHour: [],
   totalCups: 0,
   bagLbsPerHour: [],
-  totalLbs: 0,
+  totalBagLbs: 0,
   cupBeansPerHour: [],
-  totalBeansHr: [],
+  totalCupBeans: [],
   allBeans: 0,
   emplPerHour: [],
   seaTacEl: document.getElementById('seaTac'),
   ulEl: document.createElement('ul'),
-  seaTacTitle: document.createElement('seaTacTitle'),
+  titleEl: document.createElement('titleEl'),
 
 
   getRandomCust: function() {
@@ -501,8 +557,8 @@ var seaTac = {
     for (var i = 0; i < this.hours.length; i++) {
       var numLbsHr = Math.ceil(this.randomCust[i] * this.averageLbs);
       console.log('Lbs for hour ' + (i + 1) + ': ' + numLbsHr);
-      this.totalLbs += numLbsHr;
-      console.log('Total lbs for the day: ' + this.totalLbs);
+      this.totalBagLbs += numLbsHr;
+      console.log('Total lbs for the day: ' + this.totalBagLbs);
       this.bagLbsPerHour.push(numLbsHr);
     }
   },
@@ -522,7 +578,7 @@ var seaTac = {
       console.log(this.bagLbsPerHour[i]);
       var totalBeenz = this.cupBeansPerHour[i] + this.bagLbsPerHour[i];
       console.log('Total lbs of beans for hour ' + (i + 1) + ': ' + totalBeenz);
-      this.totalBeansHr.push(totalBeenz);
+      this.totalCupBeans.push(totalBeenz);
       this.allBeans += totalBeenz;
     }
   },
@@ -551,28 +607,40 @@ var seaTac = {
     console.log(seaTac.emplPerHour);
   },
 
-  typeStuff: function() {
+  typeAllTheStuff: function() {
     for (var i = 0; i < this.hours.length; i++) {
       var liEl = document.createElement('li');
-      liEl.textContent = this.hours[i] + ': ' + this.totalBeansHr[i] + ' lbs [' + this.randomCust[i] + ' customers, ' + this.cupsPerHour[i] + ' cups (' + this.cupBeansPerHour[i] + ' lbs), ' + this.bagLbsPerHour[i] + ' lbs to-go]';
+      liEl.textContent = this.hours[i] + ': ' + this.totalCupBeans[i] + ' lbs [' + this.randomCust[i] + ' customers, ' + this.cupsPerHour[i] + ' cups (' + this.cupBeansPerHour[i] + ' lbs), ' + this.bagLbsPerHour[i] + ' lbs to-go]';
       this.ulEl.appendChild(liEl);
-      var seaTacT = document.createElement('h3');
-      seaTacT.textContent = 'Sea-Tac Airport';
+      var title = document.createElement('h3');
+      title.textContent = 'Sea-Tac Airport';
+      var allCust = document.createElement('li');
+      allCust.textContent = 'Total customers at ' + title.textContent + ': ' + this.totalCust;
+      var allCups = document.createElement('li');
+      allCups.textContent = 'Total cups sold at ' + title.textContent + ': ' + this.totalCups;
+      var allBagLbs = document.createElement('li');
+      allBagLbs.textContent = 'Total to-go pound packages sold at ' + title.textContent + ': ' + this.totalBagLbs;
+      var allLbs = document.createElement('li');
+      allLbs.textContent = 'Total pounds of beans needed at ' + title.textContent + ': ' + parseFloat(this.allBeans).toFixed(1);
     }
-    this.seaTacTitle.appendChild(seaTacT);
-    this.seaTacEl.appendChild(this.seaTacTitle);
+    this.titleEl.appendChild(title);
+    this.seaTacEl.appendChild(this.titleEl);
     this.seaTacEl.appendChild(this.ulEl);
+    this.seaTacEl.appendChild(allCust);
+    this.seaTacEl.appendChild(allCups);
+    this.seaTacEl.appendChild(allBagLbs);
+    this.seaTacEl.appendChild(allLbs);
   }
 }
 
-
+Title.typeTitle();
 Pike.doAllTheThings();
-Pike.typeStuff();
+Pike.typeAllTheStuff();
 capHill.doAllTheThings();
-capHill.typeStuff();
+capHill.typeAllTheStuff();
 seaLib.doAllTheThings();
-seaLib.typeStuff();
+seaLib.typeAllTheStuff();
 Slu.doAllTheThings();
-Slu.typeStuff();
+Slu.typeAllTheStuff();
 seaTac.doAllTheThings();
-seaTac.typeStuff();
+seaTac.typeAllTheStuff();
