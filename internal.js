@@ -10,13 +10,31 @@ var Title = {
   }
 }
 
+var round(num) {
+  return parseFloat(num.toFixed(1));
+}
+
 // Pike Place Market
 var Pike = {
   minCust: 14,
   maxCust: 35,
-  averageCups: 1.2,
-  averageLbs: 0.34,
-  hours: ['6:00am', '7:00am', '8:00am', '9:00am', '10:00am', '11:00am', '12:00pm', '1:00pm', '2:00pm', '3:00pm', '4:00pm', '5:00pm', '6:00pm', '7:00pm', '8:00pm'],
+  avgCups: 1.2,
+  avgLbs: 0.34,
+  hours: ['6:00am',
+          '7:00am',
+          '8:00am',
+          '9:00am',
+          '10:00am',
+          '11:00am',
+          '12:00pm',
+          '1:00pm',
+          '2:00pm',
+          '3:00pm',
+          '4:00pm',
+          '5:00pm',
+          '6:00pm',
+          '7:00pm',
+          '8:00pm'],
   randomCust: [],
   totalCust: 0,
   cupsPerHour: [],
@@ -34,7 +52,7 @@ var Pike = {
   getRandomCust: function() {
     this.randomCust.length = 0;
     for (var i = 0; i < this.hours.length; i++) {
-      var numRandCust = Math.floor((Math.random() * (this.maxCust - this.minCust)) + this.minCust);
+      var numRandCust = Math.floor((Math.random() * (this.maxCust - this.minCust + 1)) + this.minCust);
       console.log('Customers for hour ' + (i + 1) + ': ' + numRandCust);
       this.totalCust += numRandCust;
       console.log('Total customers: ' + this.totalCust);
@@ -45,7 +63,7 @@ var Pike = {
   getCupsPerHr: function() {
     this.cupsPerHour.length = 0;
     for (var i = 0; i < this.hours.length; i++) {
-      var numCupsHr = Math.ceil(this.randomCust[i] * this.averageCups);
+      var numCupsHr = Math.ceil(this.randomCust[i] * this.avgCups);
       console.log('Cups for hour ' + (i + 1) + ': ' + numCupsHr);
       this.totalCups += numCupsHr;
       console.log('Total cups for the day: ' + this.totalCups);
@@ -56,7 +74,7 @@ var Pike = {
   getLbsPerHr: function() {
     this.bagLbsPerHour.length = 0;
     for (var i = 0; i < this.hours.length; i++) {
-      var numLbsHr = Math.ceil(this.randomCust[i] * this.averageLbs);
+      var numLbsHr = Math.ceil(this.randomCust[i] * this.avgLbs);
       console.log('Lbs for hour ' + (i + 1) + ': ' + numLbsHr);
       this.totalBagLbs += numLbsHr;
       console.log('Total lbs for the day: ' + this.totalBagLbs);
@@ -138,8 +156,8 @@ var Pike = {
 var capHill = {
   minCust: 12,
   maxCust: 28,
-  averageCups: 3.2,
-  averageLbs: 0.03,
+  avgCups: 3.2,
+  avgLbs: 0.03,
   hours: ['6:00am', '7:00am', '8:00am', '9:00am', '10:00am', '11:00am', '12:00pm', '1:00pm', '2:00pm', '3:00pm', '4:00pm', '5:00pm', '6:00pm', '7:00pm', '8:00pm'],
   randomCust: [],
   totalCust: 0,
@@ -159,7 +177,7 @@ var capHill = {
   getRandomCust: function() {
     this.randomCust.length = 0;
     for (var i = 0; i < this.hours.length; i++) {
-      var numRandCust = Math.floor((Math.random() * (this.maxCust - this.minCust)) + this.minCust);
+      var numRandCust = Math.floor((Math.random() * (this.maxCust - this.minCust + 1)) + this.minCust);
       console.log('Customers for hour ' + (i + 1) + ': ' + numRandCust);
       this.totalCust += numRandCust;
       console.log('Total customers: ' + this.totalCust);
@@ -170,7 +188,7 @@ var capHill = {
   getCupsPerHr: function() {
     this.cupsPerHour.length = 0;
     for (var i = 0; i < this.hours.length; i++) {
-      var numCupsHr = Math.ceil(this.randomCust[i] * this.averageCups);
+      var numCupsHr = Math.ceil(this.randomCust[i] * this.avgCups);
       console.log('Cups for hour ' + (i + 1) + ': ' + numCupsHr);
       this.totalCups += numCupsHr;
       console.log('Total cups for the day: ' + this.totalCups);
@@ -181,7 +199,7 @@ var capHill = {
   getLbsPerHr: function() {
     this.bagLbsPerHour.length = 0;
     for (var i = 0; i < this.hours.length; i++) {
-      var numLbsHr = Math.ceil(this.randomCust[i] * this.averageLbs);
+      var numLbsHr = Math.ceil(this.randomCust[i] * this.avgLbs);
       console.log('Lbs for hour ' + (i + 1) + ': ' + numLbsHr);
       this.totalBagLbs += numLbsHr;
       console.log('Total lbs for the day: ' + this.totalBagLbs);
@@ -263,8 +281,8 @@ var capHill = {
 var seaLib = {
   minCust: 9,
   maxCust: 45,
-  averageCups: 2.6,
-  averageLbs: 0.02,
+  avgCups: 2.6,
+  avgLbs: 0.02,
   hours: ['6:00am', '7:00am', '8:00am', '9:00am', '10:00am', '11:00am', '12:00pm', '1:00pm', '2:00pm', '3:00pm', '4:00pm', '5:00pm', '6:00pm', '7:00pm', '8:00pm'],
   randomCust: [],
   totalCust: 0,
@@ -284,7 +302,7 @@ var seaLib = {
   getRandomCust: function() {
     this.randomCust.length = 0;
     for (var i = 0; i < this.hours.length; i++) {
-      var numRandCust = Math.floor((Math.random() * (this.maxCust - this.minCust)) + this.minCust);
+      var numRandCust = Math.floor((Math.random() * (this.maxCust - this.minCust + 1)) + this.minCust);
       console.log('Customers for hour ' + (i + 1) + ': ' + numRandCust);
       this.totalCust += numRandCust;
       console.log('Total customers: ' + this.totalCust);
@@ -295,7 +313,7 @@ var seaLib = {
   getCupsPerHr: function() {
     this.cupsPerHour.length = 0;
     for (var i = 0; i < this.hours.length; i++) {
-      var numCupsHr = Math.ceil(this.randomCust[i] * this.averageCups);
+      var numCupsHr = Math.ceil(this.randomCust[i] * this.avgCups);
       console.log('Cups for hour ' + (i + 1) + ': ' + numCupsHr);
       this.totalCups += numCupsHr;
       console.log('Total cups for the day: ' + this.totalCups);
@@ -306,7 +324,7 @@ var seaLib = {
   getLbsPerHr: function() {
     this.bagLbsPerHour.length = 0;
     for (var i = 0; i < this.hours.length; i++) {
-      var numLbsHr = Math.ceil(this.randomCust[i] * this.averageLbs);
+      var numLbsHr = Math.ceil(this.randomCust[i] * this.avgLbs);
       console.log('Lbs for hour ' + (i + 1) + ': ' + numLbsHr);
       this.totalBagLbs += numLbsHr;
       console.log('Total lbs for the day: ' + this.totalBagLbs);
@@ -388,8 +406,8 @@ var seaLib = {
 var Slu = {
   minCust: 5,
   maxCust: 18,
-  averageCups: 1.3,
-  averageLbs: 0.04,
+  avgCups: 1.3,
+  avgLbs: 0.04,
   hours: ['6:00am', '7:00am', '8:00am', '9:00am', '10:00am', '11:00am', '12:00pm', '1:00pm', '2:00pm', '3:00pm', '4:00pm', '5:00pm', '6:00pm', '7:00pm', '8:00pm'],
   randomCust: [],
   totalCust: 0,
@@ -408,7 +426,7 @@ var Slu = {
   getRandomCust: function() {
     this.randomCust.length = 0;
     for (var i = 0; i < this.hours.length; i++) {
-      var numRandCust = Math.floor((Math.random() * (this.maxCust - this.minCust)) + this.minCust);
+      var numRandCust = Math.floor((Math.random() * (this.maxCust - this.minCust + 1)) + this.minCust);
       console.log('Customers for hour ' + (i + 1) + ': ' + numRandCust);
       this.totalCust += numRandCust;
       console.log('Total customers: ' + this.totalCust);
@@ -419,7 +437,7 @@ var Slu = {
   getCupsPerHr: function() {
     this.cupsPerHour.length = 0;
     for (var i = 0; i < this.hours.length; i++) {
-      var numCupsHr = Math.ceil(this.randomCust[i] * this.averageCups);
+      var numCupsHr = Math.ceil(this.randomCust[i] * this.avgCups);
       console.log('Cups for hour ' + (i + 1) + ': ' + numCupsHr);
       this.totalCups += numCupsHr;
       console.log('Total cups for the day: ' + this.totalCups);
@@ -430,7 +448,7 @@ var Slu = {
   getLbsPerHr: function() {
     this.bagLbsPerHour.length = 0;
     for (var i = 0; i < this.hours.length; i++) {
-      var numLbsHr = Math.ceil(this.randomCust[i] * this.averageLbs);
+      var numLbsHr = Math.ceil(this.randomCust[i] * this.avgLbs);
       console.log('Lbs for hour ' + (i + 1) + ': ' + numLbsHr);
       this.totalBagLbs += numLbsHr;
       console.log('Total lbs for the day: ' + this.totalBagLbs);
@@ -512,8 +530,8 @@ var Slu = {
 var seaTac = {
   minCust: 28,
   maxCust: 44,
-  averageCups: 1.1,
-  averageLbs: 0.41,
+  avgCups: 1.1,
+  avgLbs: 0.41,
   hours: ['6:00am', '7:00am', '8:00am', '9:00am', '10:00am', '11:00am', '12:00pm', '1:00pm', '2:00pm', '3:00pm', '4:00pm', '5:00pm', '6:00pm', '7:00pm', '8:00pm'],
   randomCust: [],
   totalCust: 0,
@@ -533,7 +551,7 @@ var seaTac = {
   getRandomCust: function() {
     this.randomCust.length = 0;
     for (var i = 0; i < this.hours.length; i++) {
-      var numRandCust = Math.floor((Math.random() * (this.maxCust - this.minCust)) + this.minCust);
+      var numRandCust = Math.floor((Math.random() * (this.maxCust - this.minCust + 1)) + this.minCust);
       console.log('Customers for hour ' + (i + 1) + ': ' + numRandCust);
       this.totalCust += numRandCust;
       console.log('Total customers: ' + this.totalCust);
@@ -544,7 +562,7 @@ var seaTac = {
   getCupsPerHr: function() {
     this.cupsPerHour.length = 0;
     for (var i = 0; i < this.hours.length; i++) {
-      var numCupsHr = Math.ceil(this.randomCust[i] * this.averageCups);
+      var numCupsHr = Math.ceil(this.randomCust[i] * this.avgCups);
       console.log('Cups for hour ' + (i + 1) + ': ' + numCupsHr);
       this.totalCups += numCupsHr;
       console.log('Total cups for the day: ' + this.totalCups);
@@ -555,7 +573,7 @@ var seaTac = {
   getLbsPerHr: function() {
     this.bagLbsPerHour.length = 0;
     for (var i = 0; i < this.hours.length; i++) {
-      var numLbsHr = Math.ceil(this.randomCust[i] * this.averageLbs);
+      var numLbsHr = Math.ceil(this.randomCust[i] * this.avgLbs);
       console.log('Lbs for hour ' + (i + 1) + ': ' + numLbsHr);
       this.totalBagLbs += numLbsHr;
       console.log('Total lbs for the day: ' + this.totalBagLbs);
