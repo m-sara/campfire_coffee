@@ -1,14 +1,14 @@
 'use strict';
 
 // Title
-// var Title = {
-//   docTitleEl: document.getElementById('docTitle'),
-//   typeTitle: function() {
-//     var docTitle = document.createElement('h1');
-//     docTitle.textContent = 'Campfire Coffee Daily Projections';
-//     this.docTitleEl.appendChild(docTitle);
-//   }
-// }
+var Title = {
+  docTitleEl: document.getElementById('docTitle'),
+  typeTitle: function() {
+    var docTitle = document.createElement('h1');
+    docTitle.textContent = 'Campfire Coffee Daily Projections';
+    this.docTitleEl.appendChild(docTitle);
+  }
+}
 
 // Round function
 function round(num) {
@@ -18,10 +18,10 @@ function round(num) {
 // Store constructor
 function Store(name, minCust, maxCust, avgCups, avgLbs) {
   this.name = name;
-  this.minCust = minCust;
-  this.maxCust = maxCust;
-  this.avgCups = avgCups;
-  this.avgLbs = avgLbs;
+  this.minCust = parseFloat(minCust);
+  this.maxCust = parseFloat(maxCust);
+  this.avgCups = parseFloat(avgCups);
+  this.avgLbs = parseFloat(avgLbs);
   this.hours = ['6:00am',
                 '7:00am',
                 '8:00am',
@@ -108,7 +108,7 @@ function Store(name, minCust, maxCust, avgCups, avgLbs) {
 
   this.getEmployees = function() {
     for (var i = 0; i < this.hours.length; i++) {
-      var numOfEmpl = Math.ceil((this.randomCust[i] * 2) / 60);
+      var numOfEmpl = Math.ceil(((this.cupsPerHr[i] + this.bagLbsPerHr[i]) * 2) / 60);
       console.log('Employees for hour ' + (i + 1) + ': ' + numOfEmpl);
       this.emplPerHr.push(numOfEmpl);
       this.emplHrs += numOfEmpl;
@@ -131,31 +131,6 @@ function Store(name, minCust, maxCust, avgCups, avgLbs) {
     console.log(this.emplPerHr);
     console.log('Total employee hours: ' + this.emplHrs);
   };
-
-  // this.typeAllTheStuff = function() {
-  //   for (var i = 0; i < this.hours.length; i++) {
-  //     var title = document.createElement('h3');
-  //     title.textContent = this.name;
-  //     var liEl = document.createElement('li');
-  //     liEl.textContent = this.hours[i] + ': ' + this.totalCupBeans[i] + ' lbs [' + this.randomCust[i] + ' customers, ' + this.cupsPerHr[i] + ' cups (' + this.cupBeansPerHr[i] + ' lbs), ' + this.bagLbsPerHr[i] + ' lbs to-go]';
-  //     this.ulEl.appendChild(liEl);
-  //     var allCust = document.createElement('li');
-  //     allCust.textContent = 'Total customers at ' + title.textContent + ': ' + this.totalCust;
-  //     var allCups = document.createElement('li');
-  //     allCups.textContent = 'Total cups sold at ' + title.textContent + ': ' + this.totalCups;
-  //     var allBagLbs = document.createElement('li');
-  //     allBagLbs.textContent = 'Total to-go pound packages sold at ' + title.textContent + ': ' + this.totalBagLbs;
-  //     var allLbs = document.createElement('li');
-  //     allLbs.textContent = 'Total pounds of beans needed at ' + title.textContent + ': ' + round(this.allBeans);
-  //   }
-  //   this.titleEl.appendChild(title);
-  //   this.storeEl.appendChild(this.titleEl);
-  //   this.storeEl.appendChild(this.ulEl);
-  //   this.storeEl.appendChild(allCust);
-  //   this.storeEl.appendChild(allCups);
-  //   this.storeEl.appendChild(allBagLbs);
-  //   this.storeEl.appendChild(allLbs);
-  // };
 }
 
 var pikePlace = new Store('Pike Place Market', 14, 35, 1.2, 0.34);
@@ -164,4 +139,4 @@ var seaLib = new Store('Seattle Public Library', 9, 45, 2.6, 0.02);
 var southLU = new Store('South Lake Union', 5, 18, 1.3, 0.04);
 var seaTac = new Store('Sea-Tac Airport', 28, 44, 1.1, 0.41);
 
-pikePlace.getRandomCust();
+Title.typeTitle();
