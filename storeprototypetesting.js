@@ -8,20 +8,27 @@ var Title = {
     docTitle.textContent = 'Campfire Coffee Daily Projections';
     this.docTitleEl.appendChild(docTitle);
   }
-}
+};
 
 // Round function
 function round(num) {
   return parseFloat(num.toFixed(1));
-}
+};
+
+// Contains all stores' info
+var allStores = [];
+
+
+var beansHead = document.getElementById(beansHead);
+var beansBody = document.getElementById(beansBody);
+var beansFoot = document.getElementById(beansFoot);
+var laborHead = document.getElementById(laborHead);
+var laborBody = document.getElementById(laborBody);
+var laborFoot = document.getElementById(laborFoot);
 
 // Store constructor
 function Store(name, minCust, maxCust, avgCups, avgLbs) {
   this.name = name;
-  this.minCust = parseFloat(minCust);
-  this.maxCust = parseFloat(maxCust);
-  this.avgCups = parseFloat(avgCups);
-  this.avgLbs = parseFloat(avgLbs);
   this.hours = ['6:00am',
                 '7:00am',
                 '8:00am',
@@ -37,6 +44,10 @@ function Store(name, minCust, maxCust, avgCups, avgLbs) {
                 '6:00pm',
                 '7:00pm',
                 '8:00pm'];
+  this.minCust = parseFloat(minCust);
+  this.maxCust = parseFloat(maxCust);
+  this.avgCups = parseFloat(avgCups);
+  this.avgLbs = parseFloat(avgLbs);
   this.randomCust = [];
   this.totalCust = 0;
   this.cupsPerHr = [];
@@ -44,14 +55,11 @@ function Store(name, minCust, maxCust, avgCups, avgLbs) {
   this.bagLbsPerHr = [];
   this.totalBagLbs = 0;
   this.cupBeansPerHr = [];
-  this.totalCupBeans = [];
+  this.totalHourlyBeans = [];
   this.allBeans = 0;
   this.emplPerHr = [];
   this.emplHrs = 0;
-  // this.storeEl = document.createElement('storeEl');
-  // this.ulEl = document.createElement('ul');
-  // this.titleEl = document.createElement('titleEl');
-
+  allStores.push(this);
 
   this.getRandomCust = function() {
     this.randomCust.length = 0;
@@ -86,7 +94,7 @@ function Store(name, minCust, maxCust, avgCups, avgLbs) {
     }
   };
 
-  this.getBeansPerHr = function() {
+  this.getCupBeansPerHr = function() {
     this.cupBeansPerHr.length = 0;
     for (var i = 0; i < this.hours.length; i++) {
       var numBeenzHr = round(this.cupsPerHr[i] / 16);
@@ -101,7 +109,7 @@ function Store(name, minCust, maxCust, avgCups, avgLbs) {
       console.log(this.bagLbsPerHr[i]);
       var totalBeenz = this.cupBeansPerHr[i] + this.bagLbsPerHr[i];
       console.log('Total lbs of beans for hour ' + (i + 1) + ': ' + totalBeenz);
-      this.totalCupBeans.push(totalBeenz);
+      this.totalHourlyBeans.push(totalBeenz);
       this.allBeans += totalBeenz;
     }
   };
@@ -119,14 +127,14 @@ function Store(name, minCust, maxCust, avgCups, avgLbs) {
     this.getRandomCust();
     console.log(this.randomCust);
     this.getCupsPerHr();
-    console.log('Total cups for the day: ' + this.totalCups);
     console.log(this.cupsPerHr);
+    console.log('Total cups for the day: ' + this.totalCups);
     this.getLbsPerHr();
     console.log(this.bagLbsPerHr);
-    this.getBeansPerHr();
+    this.getCupBeansPerHr();
     console.log(this.cupBeansPerHr);
     this.getTotalBeans();
-    console.log('Total lbs beans total: ' + round(this.allBeans));
+    console.log('Total beans total: ' + round(this.allBeans));
     this.getEmployees();
     console.log(this.emplPerHr);
     console.log('Total employee hours: ' + this.emplHrs);
@@ -140,3 +148,91 @@ var southLU = new Store('South Lake Union', 5, 18, 1.3, 0.04);
 var seaTac = new Store('Sea-Tac Airport', 28, 44, 1.1, 0.41);
 
 Title.typeTitle();
+pikePlace.doAllTheThings();
+capHill.doAllTheThings();
+seaLib.doAllTheThings();
+southLU.doAllTheThings();
+seaTac.doAllTheThings();
+
+function createRow(id, type, t1, t3) {
+  var tableEl = document.getElementById(id);
+  var rowEl = document.createElement('tr');
+  makeTextElement(rowEl, type, t1);
+  // loopForTableText(rowEl, type, t2);
+  makeTextElement(rowEl, type, t3);
+  tableEl.appendChild(rowEl);
+};
+
+function makeTextElement(parent, type, text) {
+  var makeElement = document.createElement(type);
+  makeElement.textContent = text;
+  parent.appendChild(makeElement);
+};
+
+// function loopForTableText(parent, type, text) {
+//   for (var i = 0; i < hours.length; i++) {
+//     makeTextElement(parent, type, text[i]);
+//   }
+// };
+
+createRow('beansHead', 'th', 'Location', 'Daily Location Total');
+
+
+var companyWide = {
+  name: 'Campfire Coffee',
+  hourlyBeanTotal: [],
+  dailyBeanTotal: 0,
+  hourlyLaborTotal: [],
+  dailyLaborTotal: 0,
+
+  calcTotalHourlyBeans: function () {
+    this.hourlyBeanTotal = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+    for (var i = 0; i < allStores.length; i++) {
+      for (var j = 0; j < allStores[i].hours.length; j++) {
+        var beansEachHour = 0;
+        beansEachHour += allStores[i].totalHourlyBeans[j];
+        console.log(beansEachHour);
+        this.hourlyBeanTotal[j] += beansEachHour;
+      }
+    }
+  },
+
+  calcTotalDailyBeans: function() {
+    this.dailyBeanTotal = 0;
+    for (var i = 0; i < allStores.length; i++) {
+      for (var j = 0; j < allStores[i].hours.length; j++) {
+        this.dailyBeanTotal += Math.ceil(allStores[i].allBeans);
+      }
+    }
+  },
+
+  // calcTotalHourlyLabor: function () {
+  //   this.hourlyLaborTotal = [];
+  //   console.log('Calc stuff');
+  //   for (var i = 0; i < allStores.length; i++) {
+  //     var laborEachHour = 0;
+  //     for (var j = 0; j < hours.length; j++) {
+  //       laborEachHour += allStores[i].emplPerHr[j];
+  //       this.hourlyLaborTotal.push(laborEachHour);
+  //     }
+  //   }
+  // },
+
+  calcTotalDailyLabor: function() {
+    for (var i = 0; i < allStores.length; i++) {
+      this.dailyLaborTotal = 0;
+      for (var j = 0; j < allStores[i].hours.length; j++) {
+        this.dailyLaborTotal += allStores[i].emplHrs;
+      }
+    }
+  }
+};
+
+function calculateCompanyTotals() {
+  companyWide.calcTotalHourlyBeans();
+  companyWide.calcTotalDailyBeans();
+  // companyWide.calcTotalHourlyLabor();
+  companyWide.calcTotalDailyLabor();
+}
+
+calculateCompanyTotals();

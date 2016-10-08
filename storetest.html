@@ -9,16 +9,40 @@
 
   </head>
   <body>
+    <section id="addNewStore">
+      <form id="form"method="post">
+        <fieldset>
+          <legend>Add a new store:</legend>
+            <label for="name">Store name: </label>
+              <input type="text" required="required" placeholder="ex. Pike Place Market"><br><br>
+            <label for="minCust">Minimum customers per hour: </label>
+              <input type="number" name="minCust" placeholder="example: 10">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <label for="maxCust">Maximum customers per hour:
+              <input type="number" name="maxCust" placeholder="example: 30"><br><br>
+            <label for="avgCups">Average cups of coffee per hour:
+              <input type="number" name="avgCups" placeholder="example: 1.2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <label for="avgLbs">Average pounds of beans sold per hour:
+              <input type="number" name="avgLbs" placeholder="example: 0.2"><br><br>
+            <input type="submit" name="submitStore" value="Create new Campfire Coffee location">
+        </fieldset>
+      </form><br><br>
+    </section>
 
-    <thead>
-    </thead>
+    <section id="storeData">
 
-    <tbody>
-    </tbody>
+      <table id="beansData" border="1px">
+        <thead id="beansHead"></thead>
+        <tbody id="beansBody"></tbody>
+        <tfoot id="beansFoot"></tfoot>
+      </table>
 
-    <tfoot>
-    </tfoot>
+      <table id="laborData" border="1px">
+        <thead id="laborHead"></thead>
+        <tbody id="laborBody"></tbody>
+        <tfoot id="laborFoot"></tfoot>
+      </table>
 
+    </section>
     <script src="storeprototypetesting.js"></script>
 
   </body>
