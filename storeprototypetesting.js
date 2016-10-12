@@ -187,12 +187,14 @@ function createRow(id, type, t1, t2, t3) {
   tableEl.appendChild(rowEl);
 };
 
-function beansRows() {
-  for (var i = 0; i < this.allStores.length; i++) {
-    createRow('beansBody', 'td', allStores[i].name, allStores[i].allBeenz, 'x')
-  }
-
-}
+// function beansRows() {
+//   for (var i = 0; i < hours.length; i++) {
+//     createRow('beansBody', 'tr', name, '', 'x')
+//     for (var j = 0; j < allStores.length; j++) {
+//       createRow('beansBody', 'td', 'x', 'x', '')
+//     }
+//   }
+// }
 
 
 // function totalsCell() {
@@ -201,4 +203,15 @@ function beansRows() {
 // }
 
 createRow('beansHead', 'th', 'Location', hours, 'Daily Location Total');
-beansRows();
+// beansRows();
+
+
+function userCreateNew() {
+  var nameEl = document.getElementById(formName);
+  var minEl = document.getElementById(formMin);
+  var maxEl = document.getElementById(formMax);
+  var cupsEl = document.getElementById(formCups);
+  var lbsEl = document.getElementById(formLbs);
+
+  
+}
