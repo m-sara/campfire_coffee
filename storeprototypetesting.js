@@ -18,6 +18,21 @@ function round(num) {
 // Contains all stores' info
 var allStores = [];
 
+var hours = ['6:00am',
+            '7:00am',
+            '8:00am',
+            '9:00am',
+            '10:00am',
+            '11:00am',
+            '12:00pm',
+            '1:00pm',
+            '2:00pm',
+            '3:00pm',
+            '4:00pm',
+            '5:00pm',
+            '6:00pm',
+            '7:00pm',
+            '8:00pm'];
 
 var beansHead = document.getElementById(beansHead);
 var beansBody = document.getElementById(beansBody);
@@ -29,21 +44,7 @@ var laborFoot = document.getElementById(laborFoot);
 // Store constructor
 function Store(name, minCust, maxCust, avgCups, avgLbs) {
   this.name = name;
-  this.hours = ['6:00am',
-                '7:00am',
-                '8:00am',
-                '9:00am',
-                '10:00am',
-                '11:00am',
-                '12:00pm',
-                '1:00pm',
-                '2:00pm',
-                '3:00pm',
-                '4:00pm',
-                '5:00pm',
-                '6:00pm',
-                '7:00pm',
-                '8:00pm'];
+
   this.minCust = parseFloat(minCust);
   this.maxCust = parseFloat(maxCust);
   this.avgCups = parseFloat(avgCups);
@@ -57,13 +58,14 @@ function Store(name, minCust, maxCust, avgCups, avgLbs) {
   this.cupBeansPerHr = [];
   this.totalHourlyBeans = [];
   this.allBeans = 0;
+  this.allBeenz = [];
   this.emplPerHr = [];
   this.emplHrs = 0;
   allStores.push(this);
 
   this.getRandomCust = function() {
     this.randomCust.length = 0;
-    for (var i = 0; i < this.hours.length; i++) {
+    for (var i = 0; i < hours.length; i++) {
       var numRandCust = Math.floor((Math.random() * (this.maxCust - this.minCust + 1)) + this.minCust);
       console.log('Customers for hour ' + (i + 1) + ': ' + numRandCust);
       this.totalCust += numRandCust;
@@ -74,7 +76,7 @@ function Store(name, minCust, maxCust, avgCups, avgLbs) {
 
   this.getCupsPerHr = function() {
     this.cupsPerHr.length = 0;
-    for (var i = 0; i < this.hours.length; i++) {
+    for (var i = 0; i < hours.length; i++) {
       var numCupsHr = Math.ceil(this.randomCust[i] * this.avgCups);
       console.log('Cups for hour ' + (i + 1) + ': ' + numCupsHr);
       this.totalCups += numCupsHr;
@@ -85,7 +87,7 @@ function Store(name, minCust, maxCust, avgCups, avgLbs) {
 
   this.getLbsPerHr = function() {
     this.bagLbsPerHr.length = 0;
-    for (var i = 0; i < this.hours.length; i++) {
+    for (var i = 0; i < hours.length; i++) {
       var numLbsHr = Math.ceil(this.randomCust[i] * this.avgLbs);
       console.log('Lbs for hour ' + (i + 1) + ': ' + numLbsHr);
       this.totalBagLbs += numLbsHr;
@@ -96,7 +98,7 @@ function Store(name, minCust, maxCust, avgCups, avgLbs) {
 
   this.getCupBeansPerHr = function() {
     this.cupBeansPerHr.length = 0;
-    for (var i = 0; i < this.hours.length; i++) {
+    for (var i = 0; i < hours.length; i++) {
       var numBeenzHr = round(this.cupsPerHr[i] / 16);
       console.log('Lbs of beans for cups in hour ' + (i + 1) + ': ' + numBeenzHr);
       this.cupBeansPerHr.push(numBeenzHr);
@@ -104,7 +106,7 @@ function Store(name, minCust, maxCust, avgCups, avgLbs) {
   };
 
   this.getTotalBeans =  function() {
-    for (var i = 0; i < this.hours.length; i++) {
+    for (var i = 0; i < hours.length; i++) {
       console.log(this.cupBeansPerHr[i]);
       console.log(this.bagLbsPerHr[i]);
       var totalBeenz = this.cupBeansPerHr[i] + this.bagLbsPerHr[i];
@@ -112,10 +114,11 @@ function Store(name, minCust, maxCust, avgCups, avgLbs) {
       this.totalHourlyBeans.push(totalBeenz);
       this.allBeans += totalBeenz;
     }
+    this.allBeenz.push(this.allBeans);
   };
 
   this.getEmployees = function() {
-    for (var i = 0; i < this.hours.length; i++) {
+    for (var i = 0; i < hours.length; i++) {
       var numOfEmpl = Math.ceil(((this.cupsPerHr[i] + this.bagLbsPerHr[i]) * 2) / 60);
       console.log('Employees for hour ' + (i + 1) + ': ' + numOfEmpl);
       this.emplPerHr.push(numOfEmpl);
@@ -139,6 +142,13 @@ function Store(name, minCust, maxCust, avgCups, avgLbs) {
     console.log(this.emplPerHr);
     console.log('Total employee hours: ' + this.emplHrs);
   };
+
+
+
+
+
+
+
 }
 
 var pikePlace = new Store('Pike Place Market', 14, 35, 1.2, 0.34);
@@ -154,14 +164,7 @@ seaLib.doAllTheThings();
 southLU.doAllTheThings();
 seaTac.doAllTheThings();
 
-function createRow(id, type, t1, t3) {
-  var tableEl = document.getElementById(id);
-  var rowEl = document.createElement('tr');
-  makeTextElement(rowEl, type, t1);
-  // loopForTableText(rowEl, type, t2);
-  makeTextElement(rowEl, type, t3);
-  tableEl.appendChild(rowEl);
-};
+
 
 function makeTextElement(parent, type, text) {
   var makeElement = document.createElement(type);
@@ -169,70 +172,33 @@ function makeTextElement(parent, type, text) {
   parent.appendChild(makeElement);
 };
 
-// function loopForTableText(parent, type, text) {
-//   for (var i = 0; i < hours.length; i++) {
-//     makeTextElement(parent, type, text[i]);
-//   }
-// };
-
-createRow('beansHead', 'th', 'Location', 'Daily Location Total');
-
-
-var companyWide = {
-  name: 'Campfire Coffee',
-  hourlyBeanTotal: [],
-  dailyBeanTotal: 0,
-  hourlyLaborTotal: [],
-  dailyLaborTotal: 0,
-
-  calcTotalHourlyBeans: function () {
-    this.hourlyBeanTotal = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-    for (var i = 0; i < allStores.length; i++) {
-      for (var j = 0; j < allStores[i].hours.length; j++) {
-        var beansEachHour = 0;
-        beansEachHour += allStores[i].totalHourlyBeans[j];
-        console.log(beansEachHour);
-        this.hourlyBeanTotal[j] += beansEachHour;
-      }
-    }
-  },
-
-  calcTotalDailyBeans: function() {
-    this.dailyBeanTotal = 0;
-    for (var i = 0; i < allStores.length; i++) {
-      for (var j = 0; j < allStores[i].hours.length; j++) {
-        this.dailyBeanTotal += Math.ceil(allStores[i].allBeans);
-      }
-    }
-  },
-
-  // calcTotalHourlyLabor: function () {
-  //   this.hourlyLaborTotal = [];
-  //   console.log('Calc stuff');
-  //   for (var i = 0; i < allStores.length; i++) {
-  //     var laborEachHour = 0;
-  //     for (var j = 0; j < hours.length; j++) {
-  //       laborEachHour += allStores[i].emplPerHr[j];
-  //       this.hourlyLaborTotal.push(laborEachHour);
-  //     }
-  //   }
-  // },
-
-  calcTotalDailyLabor: function() {
-    for (var i = 0; i < allStores.length; i++) {
-      this.dailyLaborTotal = 0;
-      for (var j = 0; j < allStores[i].hours.length; j++) {
-        this.dailyLaborTotal += allStores[i].emplHrs;
-      }
-    }
+function loopForCells(parent, type, text) {
+  for (var i = 0; i < hours.length; i++) {
+    makeTextElement(parent, type, text[i]);
   }
 };
 
-function calculateCompanyTotals() {
-  companyWide.calcTotalHourlyBeans();
-  companyWide.calcTotalDailyBeans();
-  // companyWide.calcTotalHourlyLabor();
-  companyWide.calcTotalDailyLabor();
+function createRow(id, type, t1, t2, t3) {
+  var tableEl = document.getElementById(id);
+  var rowEl = document.createElement('tr');
+  makeTextElement(rowEl, type, t1);
+  loopForCells(rowEl, type, t2);
+  makeTextElement(rowEl, type, t3);
+  tableEl.appendChild(rowEl);
+};
+
+function beansRows() {
+  for (var i = 0; i < this.allStores.length; i++) {
+    createRow('beansBody', 'td', allStores[i].name, allStores[i].allBeenz, 'x')
+  }
+
 }
 
-calculateCompanyTotals();
+
+// function totalsCell() {
+//   var tableEl = document.getElementById(id);
+//   var
+// }
+
+createRow('beansHead', 'th', 'Location', hours, 'Daily Location Total');
+beansRows();
